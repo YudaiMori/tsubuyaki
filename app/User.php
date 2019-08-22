@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Models\ModelConfig;
+use App\Models\Post;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -10,26 +12,13 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable, ModelConfig, HasApiTokens;
 
     /**
      * Increment OFF
      * @var bool
      */
     public $incrementing = false;
-
-    /**
-     * Model 設定
-     *
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            $model->id = str::uuid();
-        });
-    }
 
     /**
      * The attributes that are mass assignable.
@@ -57,4 +46,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'user_id', 'id');
+    }
 }
