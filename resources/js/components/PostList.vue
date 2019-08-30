@@ -2,12 +2,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card" v-for="post in posts">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ post.relationships.user.attributes.name }}</h5>
-                        <p class="card-text">{{ post.attributes.content }}</p>
-                    </div>
-                </div>
+                <post-card v-for="post in posts"
+                           :post="post"
+                           :key="post.id"></post-card>
             </div>
 
         </div>
@@ -15,8 +12,10 @@
 </template>
 
 <script>
+    import PostCard from "./PostCard";
     export default {
         name: "PostList",
+        comments: {PostCard},
         created: function () {
             this.loadData();
         },
@@ -32,8 +31,11 @@
                         this.posts = response.data.data;
                     }))
                     .catch(error => {
-                        console.log(error)
+                        console.log(error);
                     });
+            },
+            push: function (post) {
+                this.posts.unshift(post);
             }
         }
     }
