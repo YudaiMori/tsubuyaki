@@ -4,6 +4,7 @@
             <div class="col-md-8">
                 <post-card v-for="post in posts"
                            :post="post"
+                           @post-card-has-clicked="$emit('post-card-has-clicked', $event)"
                            :key="post.id"></post-card>
             </div>
 
