@@ -11,6 +11,11 @@
                 <div class="modal-body">
                     <p>{{ post.attributes.content }}</p>
                 </div>
+                <div v-if="comments">
+                    <div class="modal-footer" v-for="comment in comments">
+                        <p>{{ comment.attributes.content }}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -22,11 +27,22 @@
         data: function () {
             return {
                 post: null,
+                comments: [],
             }
         },
         methods: {
             open: function (post) {
-                this.post = post;
+                // this.post = post;
+
+                axios.get('/api/v1/posts/' + post.id)
+                    .then((response => {
+                        this.post = response.data.data;
+                        this.comments = response.data.data.relationships.comments;
+                    }))
+                    .catch(error => {
+                        console.log(error);
+                    });
+
                 $('#postDetailModal').modal('show');
             }
         }

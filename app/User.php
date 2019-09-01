@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Comment;
 use App\Models\ModelConfig;
 use App\Models\Post;
 use Laravel\Passport\HasApiTokens;

@@ -2037,16 +2037,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PostDetailModal",
   data: function data() {
     return {
-      post: null
+      post: null,
+      comments: []
     };
   },
   methods: {
     open: function open(post) {
-      this.post = post;
+      var _this = this;
+
+      // this.post = post;
+      axios.get('/api/v1/posts/' + post.id).then(function (response) {
+        _this.post = response.data.data;
+        _this.comments = response.data.data.relationships.comments;
+      })["catch"](function (error) {
+        console.log(error);
+      });
       $('#postDetailModal').modal('show');
     }
   }
@@ -39163,7 +39177,19 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _c("p", [_vm._v(_vm._s(_vm.post.attributes.content))])
-                ])
+                ]),
+                _vm._v(" "),
+                _vm.comments
+                  ? _c(
+                      "div",
+                      _vm._l(_vm.comments, function(comment) {
+                        return _c("div", { staticClass: "modal-footer" }, [
+                          _c("p", [_vm._v(_vm._s(comment.attributes.content))])
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
               ])
             : _vm._e()
         ]
