@@ -17,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::withCount('comments')->latest()->get();
 
         return PostResource::collection($posts);
     }
@@ -32,7 +32,7 @@ class PostController extends Controller
 //        $post->load(['user']);
 
         $post->load(['comments' => function ($query) {
-            $query->with(['user']);
+            $query->with(['user'])->oldest();
         }]);
 
         return new PostResource($post);

@@ -10644,3 +10644,7 @@ a.text-dark:focus {
   }
 }
 
+.card .card-body small {
+  align-self: center;
+}
+

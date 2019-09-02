@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div v-if="post">
-                        <p>{{ post.relationships.user.attributes.name }}</p>
+                        <h5>{{ post.relationships.user.attributes.name }}</h5>
                         <p>{{ post.attributes.content }}</p>
                     </div>
                     <button type="button" class="close" @click="close" aria-label="Close">

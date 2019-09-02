@@ -6125,6 +6125,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PostCard",
   props: ['post']
@@ -6184,6 +6187,10 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
       $('#postDetailModal').modal('show');
+    },
+    close: function close() {
+      this.comments = null;
+      $('#postDetailModal').modal('hide');
     }
   }
 });
@@ -43054,7 +43061,7 @@ var render = function() {
           _c("div", { staticClass: "modal-header" }, [
             _vm.post
               ? _c("div", [
-                  _c("p", [
+                  _c("h5", [
                     _vm._v(_vm._s(_vm.post.relationships.user.attributes.name))
                   ]),
                   _vm._v(" "),
@@ -43372,21 +43379,31 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "d-flex justify-content-between" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-link",
-            on: {
-              click: function($event) {
-                return _vm.$emit("comment-button-has-clicked", _vm.post)
+        _c("div", { staticClass: "d-flex" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-link",
+              on: {
+                click: function($event) {
+                  return _vm.$emit("comment-button-has-clicked", _vm.post)
+                }
               }
-            }
-          },
-          [_c("icon", { attrs: { icon: ["far", "comment"] } })],
-          1
-        ),
+            },
+            [_c("icon", { attrs: { icon: ["far", "comment"] } })],
+            1
+          ),
+          _vm._v(" "),
+          _vm.post.attributes.comments_count
+            ? _c("small", { staticClass: "text-muted" }, [
+                _vm._v(_vm._s(_vm.post.attributes.comments_count))
+              ])
+            : _vm._e()
+        ]),
         _vm._v(" "),
-        _c("p", [_c("small", [_vm._v(_vm._s(_vm.post.attributes.created_at))])])
+        _c("small", { staticClass: "text-muted" }, [
+          _vm._v(_vm._s(_vm.post.attributes.created_at))
+        ])
       ])
     ])
   ])
@@ -43428,20 +43445,34 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "modal-dialog modal-xl", attrs: { role: "document" } },
+        { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
         [
           _vm.post
             ? _c("div", { staticClass: "modal-content" }, [
                 _c("div", { staticClass: "modal-header" }, [
-                  _c("h5", { staticClass: "modal-title" }, [
-                    _vm._v(_vm._s(_vm.post.relationships.user.attributes.name))
+                  _c("div", [
+                    _c("h5", { staticClass: "modal-title" }, [
+                      _vm._v(
+                        _vm._s(_vm.post.relationships.user.attributes.name)
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(_vm.post.attributes.content))])
                   ]),
                   _vm._v(" "),
-                  _vm._m(0)
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-body" }, [
-                  _c("p", [_vm._v(_vm._s(_vm.post.attributes.content))])
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: { type: "button", "aria-label": "Close" },
+                      on: { click: _vm.close }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×")
+                      ])
+                    ]
+                  )
                 ]),
                 _vm._v(" "),
                 _vm.comments
@@ -43462,25 +43493,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "modal",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

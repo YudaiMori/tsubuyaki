@@ -1,15 +1,15 @@
 <template>
     <div class="modal fade" id="postDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" v-if="post">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ post.relationships.user.attributes.name }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <div>
+                        <h5 class="modal-title">{{ post.relationships.user.attributes.name }}</h5>
+                        <p>{{ post.attributes.content }}</p>
+                    </div>
+                    <button type="button" class="close" @click="close" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
-                <div class="modal-body">
-                    <p>{{ post.attributes.content }}</p>
                 </div>
                 <div v-if="comments">
                     <div class="modal-body" v-for="comment in comments">
@@ -44,6 +44,10 @@
                     });
 
                 $('#postDetailModal').modal('show');
+            },
+            close: function () {
+                this.comments = null;
+                $('#postDetailModal').modal('hide');
             }
         }
     }
