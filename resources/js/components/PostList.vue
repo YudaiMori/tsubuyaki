@@ -5,9 +5,9 @@
                 <post-card v-for="post in posts"
                            :post="post"
                            @post-card-has-clicked="$emit('post-card-has-clicked', $event)"
+                           @comment-button-has-clicked="$emit('comment-button-has-clicked', $event)"
                            :key="post.id"></post-card>
             </div>
-
         </div>
     </div>
 </template>

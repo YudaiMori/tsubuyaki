@@ -1,9 +1,14 @@
 <template>
     <div class="card" >
-        <div class="card-body" @click="$emit('post-card-has-clicked', post)">
-            <h5 class="card-title">{{ post.relationships.user.attributes.name }}</h5>
-            <p class="card-text">{{ post.attributes.content }}</p>
-            <p><small>{{ post.attributes.created_at }}</small></p>
+        <div class="card-body">
+            <h5 class="card-title" @click="$emit('post-card-has-clicked', post)">{{ post.relationships.user.attributes.name }}</h5>
+            <p class="card-text" @click="$emit('post-card-has-clicked', post)">{{ post.attributes.content }}</p>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-link" @click="$emit('comment-button-has-clicked', post)">
+                    <icon :icon="['far', 'comment']"></icon>
+                </button>
+                <p><small>{{ post.attributes.created_at }}</small></p>
+            </div>
         </div>
     </div>
 </template>

@@ -12,7 +12,7 @@
                     <p>{{ post.attributes.content }}</p>
                 </div>
                 <div v-if="comments">
-                    <div class="modal-footer" v-for="comment in comments">
+                    <div class="modal-body" v-for="comment in comments">
                         <p>{{ comment.attributes.content }}</p>
                     </div>
                 </div>
