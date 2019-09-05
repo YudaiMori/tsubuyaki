@@ -44,6 +44,7 @@
                 $('#postDetailModal').modal('show');
             },
             close: function () {
+                this.post = null;
                 this.comments = null;
                 $('#postDetailModal').modal('hide');
             }

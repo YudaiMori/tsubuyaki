@@ -13069,6 +13069,7 @@ __webpack_require__.r(__webpack_exports__);
       $('#postDetailModal').modal('show');
     },
     close: function close() {
+      this.post = null;
       this.comments = null;
       $('#postDetailModal').modal('hide');
     }
@@ -13144,6 +13145,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MyPostList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MyPostList */ "./resources/js/components/MyPostList.vue");
 /* harmony import */ var _DeletePostModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DeletePostModal */ "./resources/js/components/DeletePostModal.vue");
+/* harmony import */ var _PostDetailModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PostDetailModal */ "./resources/js/components/PostDetailModal.vue");
 //
 //
 //
@@ -13152,15 +13154,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ProfileView",
   components: {
+    PostDetailModal: _PostDetailModal__WEBPACK_IMPORTED_MODULE_2__["default"],
     DeletePostModal: _DeletePostModal__WEBPACK_IMPORTED_MODULE_1__["default"],
     MyPostList: _MyPostList__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: {
+    showPostDetailModal: function showPostDetailModal($event) {
+      this.$refs.postDetailModal.open($event);
+    },
+    showCreateCommentModal: function showCreateCommentModal($event) {
+      this.$refs.createCommentModal.open($event);
+    },
     showDeleteModal: function showDeleteModal($event) {
       this.$refs.deletePostModal.open($event);
     }
@@ -50730,8 +50744,16 @@ var render = function() {
     [
       _c("my-post-list", {
         ref: "postList",
-        on: { "delete-button-has-clicked": _vm.showDeleteModal }
+        on: {
+          "post-card-has-clicked": _vm.showPostDetailModal,
+          "comment-button-has-clicked": _vm.showCreateCommentModal,
+          "delete-button-has-clicked": _vm.showDeleteModal
+        }
       }),
+      _vm._v(" "),
+      _c("post-detail-modal", { ref: "postDetailModal" }),
+      _vm._v(" "),
+      _c("create-comment-modal", { ref: "createCommentModal" }),
       _vm._v(" "),
       _c("delete-post-modal", { ref: "deletePostModal" })
     ],
