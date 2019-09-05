@@ -1,7 +1,17 @@
 <template>
     <div class="card" >
         <div class="card-body">
-            <h5 class="card-title" @click="$emit('post-card-has-clicked', post)">{{ post.relationships.user.attributes.name }}</h5>
+            <div class="d-flex justify-content-between">
+                <h5 class="card-title" @click="$emit('post-card-has-clicked', post)">{{ post.relationships.user.attributes.name }}</h5>
+                <div class="btn-group">
+                    <button class="btn btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <icon icon="angle-down"></icon>
+                    </button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item" @click="$emit('delete-button-has-clicked', post)">削除</button>
+                    </div>
+                </div>
+            </div>
             <p class="card-text" @click="$emit('post-card-has-clicked', post)">{{ post.attributes.content }}</p>
             <div class="d-flex justify-content-between">
                 <div class="d-flex">

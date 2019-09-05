@@ -32,8 +32,6 @@
         },
         methods: {
             open: function (post) {
-                // this.post = post;
-
                 axios.get('/api/v1/posts/' + post.id)
                     .then((response => {
                         this.post = response.data.data;

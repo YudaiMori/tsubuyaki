@@ -62,4 +62,17 @@ class PostController extends Controller
             ->setStatusCode(201);
     }
 
+    /**
+     * 投稿を削除するApi
+     * @param Post $post
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function delete(Post $post)
+    {
+        $post->delete();
+
+        return response(null, 204);
+    }
+
 }
