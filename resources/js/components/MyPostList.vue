@@ -13,10 +13,10 @@
 </template>
 
 <script>
-    import PostCard from "./PostCard";
+    import MyPostCard from "./MyPostCard";
     export default {
-        name: "PostList",
-        components: {PostCard},
+        name: "MyPostList",
+        components: {MyPostCard},
         created: function () {
             this.loadData();
         },
@@ -27,7 +27,7 @@
         },
         methods: {
             loadData: function () {
-                axios.get('/api/v1/posts')
+                axios.get('/api/v1/users/posts')
                     .then((response => {
                         this.posts = response.data.data;
                     }))

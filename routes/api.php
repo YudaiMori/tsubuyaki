@@ -18,5 +18,7 @@ Route::middleware('auth:api')->prefix('/v1')->namespace('Api\V1')->group(functio
     Route::get('posts/{post}', 'PostController@show')->name('postApi');
     Route::post('store', 'PostController@store')->name('storeApi');
 
+    Route::get('users/posts', 'UserController@myPosts')->name('myPostsApi');
+
     Route::post('comments', 'CommentController@store')->name('commentApi');
 });
