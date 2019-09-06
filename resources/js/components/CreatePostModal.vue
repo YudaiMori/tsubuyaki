@@ -12,7 +12,8 @@
                         <textarea class="form-control" id="content" rows="8" v-model="form.content" placeholder="いまどうしてる？"></textarea>
                         <croppa ref="croppa"
                                 v-if="editPicture"
-                                v-model="form.imagePicker"></croppa>
+                                v-model="form.imagePicker"
+                                disable-click-to-choose></croppa>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">

@@ -12715,6 +12715,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CreatePostModal",
@@ -12982,6 +12983,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "MyPostCard",
   props: ['post']
@@ -13066,6 +13070,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -52859,6 +52865,7 @@ var render = function() {
                 _vm.editPicture
                   ? _c("croppa", {
                       ref: "croppa",
+                      attrs: { "disable-click-to-choose": "" },
                       model: {
                         value: _vm.form.imagePicker,
                         callback: function($$v) {
@@ -53152,6 +53159,18 @@ var render = function() {
         [_vm._v(_vm._s(_vm.post.attributes.content))]
       ),
       _vm._v(" "),
+      _vm.post.attributes.image_url
+        ? _c("img", {
+            staticClass: "img-fluid",
+            attrs: { src: _vm.post.attributes.image_url },
+            on: {
+              click: function($event) {
+                return _vm.$emit("post-card-has-clicked", _vm.post)
+              }
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
       _c("div", { staticClass: "d-flex justify-content-between" }, [
         _c("div", { staticClass: "d-flex" }, [
           _c(
@@ -53287,6 +53306,7 @@ var render = function() {
       _vm._v(" "),
       _vm.post.attributes.image_url
         ? _c("img", {
+            staticClass: "img-fluid",
             attrs: { src: _vm.post.attributes.image_url },
             on: {
               click: function($event) {
@@ -53379,6 +53399,7 @@ var render = function() {
                     _vm._v(" "),
                     _vm.post.attributes.image_url
                       ? _c("img", {
+                          staticClass: "img-fluid",
                           attrs: { src: _vm.post.attributes.image_url },
                           on: {
                             click: function($event) {
