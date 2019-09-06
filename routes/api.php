@@ -20,6 +20,7 @@ Route::middleware('auth:api')->prefix('/v1')->namespace('Api\V1')->group(functio
     Route::delete('posts/{post}', 'PostController@delete')->name('deleteApi');
 
     Route::get('users/profile', 'UserController@profile')->name('profileApi');
+    Route::patch('users/profile', 'UserController@update')->name('updateUserApi');
     Route::get('users/posts', 'UserController@myPosts')->name('myPostsApi');
 
     Route::post('comments', 'CommentController@store')->name('commentApi');

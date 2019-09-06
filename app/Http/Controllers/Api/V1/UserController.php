@@ -21,6 +21,31 @@ class UserController extends Controller
     }
 
     /**
+     * ユーザのプロフィール更新
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update(Request $request)
+    {
+        $user = $request->user();
+
+        $this->validate($request, [
+            'name' => 'nullable|string|min:1|max:50'
+        ]);
+
+        if ($request->input('name')) {
+            $user->name = $request->input('name');
+        }
+
+        $user->update();
+
+        return (new UserResource($user))
+        ->response()
+        ->setStatusCode(200);
+    }
+
+    /**
      * ユーザの投稿一覧
      * @param Request $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
@@ -31,4 +56,5 @@ class UserController extends Controller
 
         return PostResource::collection($posts);
     }
+
 }
