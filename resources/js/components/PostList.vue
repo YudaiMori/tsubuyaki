@@ -22,7 +22,7 @@
         },
         data: function () {
             return {
-                posts: []
+                posts: [],
             }
         },
         methods: {

@@ -6,6 +6,7 @@
                     <div>
                         <h5 class="modal-title">{{ post.relationships.user.attributes.name }}</h5>
                         <p>{{ post.attributes.content }}</p>
+                        <img @click="$emit('post-card-has-clicked', post)" v-if="post.attributes.image_url" :src="post.attributes.image_url">
                     </div>
                     <button type="button" class="close" @click="close" aria-label="Close">
                         <span aria-hidden="true">&times;</span>

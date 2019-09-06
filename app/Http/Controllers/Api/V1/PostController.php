@@ -47,13 +47,20 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'content' => 'required|String|min:1|max:140'
+            'content' => 'required|String|min:1|max:140',
+            'image' => 'nullable|image'
         ]);
 
         $post = new Post();
 
         $post->content = $request->input('content');
         $post->user_id = $request->user()->id;
+
+        if ($request->hasFile('image'))
+        {
+            $path = $request->image->store('images', 'public');
+            $post->image_path = $path;
+        }
 
         $post->save();
 
