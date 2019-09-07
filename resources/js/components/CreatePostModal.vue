@@ -36,7 +36,8 @@
             return {
                 editPicture: false,
                 form: {
-                    content: null
+                    content: null,
+                    imagePicker: {},
                 }
             }
         },
@@ -60,10 +61,13 @@
             },
             createPost: async function () {
                 let formData = new FormData();
-                let image = await this.form.imagePicker.promisedBlob('image/jpeg', 0.8);
 
-                if (image) {
-                    formData.append('image', image);
+                if (this.editPicture) {
+                    let image = await this.form.imagePicker.promisedBlob('image/jpeg', 0.8);
+
+                    if (image) {
+                        formData.append('image', image);
+                    }
                 }
 
                 if (this.form.content) {

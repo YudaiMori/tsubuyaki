@@ -12726,7 +12726,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       editPicture: false,
       form: {
-        content: null
+        content: null,
+        imagePicker: {}
       }
     };
   },
@@ -12762,16 +12763,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 formData = new FormData();
-                _context.next = 3;
+
+                if (!this.editPicture) {
+                  _context.next = 6;
+                  break;
+                }
+
+                _context.next = 4;
                 return this.form.imagePicker.promisedBlob('image/jpeg', 0.8);
 
-              case 3:
+              case 4:
                 image = _context.sent;
 
                 if (image) {
                   formData.append('image', image);
                 }
 
+              case 6:
                 if (this.form.content) {
                   formData.append('content', this.form.content);
                 }
@@ -12789,7 +12797,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.log(error);
                 });
 
-              case 8:
+              case 9:
               case "end":
                 return _context.stop();
             }
