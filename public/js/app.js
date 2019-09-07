@@ -13020,6 +13020,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -13043,7 +13044,6 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/v1/users/profile').then(function (response) {
         _this.user = response.data.data;
-        console.log(_this.user);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -13235,6 +13235,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ProfileCard",
   props: ['user']
@@ -13254,6 +13257,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MyPostList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MyPostList */ "./resources/js/components/MyPostList.vue");
 /* harmony import */ var _DeletePostModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DeletePostModal */ "./resources/js/components/DeletePostModal.vue");
 /* harmony import */ var _PostDetailModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PostDetailModal */ "./resources/js/components/PostDetailModal.vue");
+/* harmony import */ var _UpdateProfileModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UpdateProfileModal */ "./resources/js/components/UpdateProfileModal.vue");
 //
 //
 //
@@ -13266,12 +13270,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ProfileView",
   components: {
+    UpdateProfileModal: _UpdateProfileModal__WEBPACK_IMPORTED_MODULE_3__["default"],
     PostDetailModal: _PostDetailModal__WEBPACK_IMPORTED_MODULE_2__["default"],
     DeletePostModal: _DeletePostModal__WEBPACK_IMPORTED_MODULE_1__["default"],
     MyPostList: _MyPostList__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -13285,6 +13293,77 @@ __webpack_require__.r(__webpack_exports__);
     },
     showDeleteModal: function showDeleteModal($event) {
       this.$refs.deletePostModal.open($event);
+    },
+    showUpdateProfileModal: function showUpdateProfileModal($event) {
+      this.$refs.updateProfileModal.open($event);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UpdateProfileModal.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UpdateProfileModal.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "UpdateProfileModal",
+  data: function data() {
+    return {
+      user: null,
+      form: {
+        name: null
+      }
+    };
+  },
+  methods: {
+    open: function open(user) {
+      this.user = user;
+      this.form.name = user.attributes.name;
+      $('#updateProfileModal').modal('show');
+    },
+    close: function close() {
+      $('#updateProfileModal').modal('hide');
+    },
+    save: function save() {
+      var _this = this;
+
+      axios.patch('/api/v1/users/profile', {
+        name: this.form.name
+      }).then(function (response) {
+        _this.close();
+
+        location.reload();
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -53229,7 +53308,14 @@ var render = function() {
         "div",
         { staticClass: "col-md-8" },
         [
-          _c("profile-card", { attrs: { user: _vm.user } }),
+          _c("profile-card", {
+            attrs: { user: _vm.user },
+            on: {
+              "profile-update-button-has-clicked": function($event) {
+                return _vm.$emit("profile-update-button-has-clicked", $event)
+              }
+            }
+          }),
           _vm._v(" "),
           _vm._l(_vm.posts, function(post) {
             return _c("my-post-card", {
@@ -53517,8 +53603,27 @@ var render = function() {
   return _vm.user
     ? _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-body" }, [
-          _c("h5", { staticClass: "card-title" }, [
-            _vm._v(_vm._s(_vm.user.attributes.name))
+          _c("div", { staticClass: "d-flex justify-content-between" }, [
+            _c("h5", { staticClass: "card-title" }, [
+              _vm._v(_vm._s(_vm.user.attributes.name))
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.$emit(
+                      "profile-update-button-has-clicked",
+                      _vm.user
+                    )
+                  }
+                }
+              },
+              [_vm._v("プロフィールを編集")]
+            )
           ]),
           _vm._v(" "),
           _c("p", { staticClass: "card-text" }, [
@@ -53558,7 +53663,8 @@ var render = function() {
         on: {
           "post-card-has-clicked": _vm.showPostDetailModal,
           "comment-button-has-clicked": _vm.showCreateCommentModal,
-          "delete-button-has-clicked": _vm.showDeleteModal
+          "delete-button-has-clicked": _vm.showDeleteModal,
+          "profile-update-button-has-clicked": _vm.showUpdateProfileModal
         }
       }),
       _vm._v(" "),
@@ -53566,9 +53672,104 @@ var render = function() {
       _vm._v(" "),
       _c("create-comment-modal", { ref: "createCommentModal" }),
       _vm._v(" "),
-      _c("delete-post-modal", { ref: "deletePostModal" })
+      _c("delete-post-modal", { ref: "deletePostModal" }),
+      _vm._v(" "),
+      _c("update-profile-modal", { ref: "updateProfileModal" })
     ],
     1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UpdateProfileModal.vue?vue&type=template&id=b46415d0&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UpdateProfileModal.vue?vue&type=template&id=b46415d0& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: "updateProfileModal",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-labelledby": "exampleModalLabel",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog", attrs: { role: "document" } }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header" }, [
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: { type: "button", "aria-label": "Close" },
+                on: { click: _vm.close }
+              },
+              [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _vm.user
+              ? _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.name,
+                        expression: "form.name"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.form.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "name", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "button" },
+                on: { click: _vm.save }
+              },
+              [_vm._v("保存")]
+            )
+          ])
+        ])
+      ])
+    ]
   )
 }
 var staticRenderFns = []
@@ -66801,6 +67002,7 @@ var map = {
 	"./components/PostList.vue": "./resources/js/components/PostList.vue",
 	"./components/ProfileCard.vue": "./resources/js/components/ProfileCard.vue",
 	"./components/ProfileView.vue": "./resources/js/components/ProfileView.vue",
+	"./components/UpdateProfileModal.vue": "./resources/js/components/UpdateProfileModal.vue",
 	"./components/passport/AuthorizedClients.vue": "./resources/js/components/passport/AuthorizedClients.vue",
 	"./components/passport/Clients.vue": "./resources/js/components/passport/Clients.vue",
 	"./components/passport/PersonalAccessTokens.vue": "./resources/js/components/passport/PersonalAccessTokens.vue"
@@ -67758,6 +67960,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileView_vue_vue_type_template_id_35df8fd3___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileView_vue_vue_type_template_id_35df8fd3___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/UpdateProfileModal.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/UpdateProfileModal.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _UpdateProfileModal_vue_vue_type_template_id_b46415d0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UpdateProfileModal.vue?vue&type=template&id=b46415d0& */ "./resources/js/components/UpdateProfileModal.vue?vue&type=template&id=b46415d0&");
+/* harmony import */ var _UpdateProfileModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UpdateProfileModal.vue?vue&type=script&lang=js& */ "./resources/js/components/UpdateProfileModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _UpdateProfileModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UpdateProfileModal_vue_vue_type_template_id_b46415d0___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _UpdateProfileModal_vue_vue_type_template_id_b46415d0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/UpdateProfileModal.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/UpdateProfileModal.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/UpdateProfileModal.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateProfileModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./UpdateProfileModal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UpdateProfileModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateProfileModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/UpdateProfileModal.vue?vue&type=template&id=b46415d0&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/UpdateProfileModal.vue?vue&type=template&id=b46415d0& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateProfileModal_vue_vue_type_template_id_b46415d0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./UpdateProfileModal.vue?vue&type=template&id=b46415d0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UpdateProfileModal.vue?vue&type=template&id=b46415d0&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateProfileModal_vue_vue_type_template_id_b46415d0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateProfileModal_vue_vue_type_template_id_b46415d0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
