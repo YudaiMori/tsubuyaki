@@ -31,7 +31,8 @@ class UserController extends Controller
         $user = $request->user();
 
         $this->validate($request, [
-            'name' => 'nullable|string|min:1|max:50'
+            'name' => 'string|min:1|max:50',
+            'introduction' => 'nullable|string|max:160',
         ]);
 
         if ($request->input('name')) {
