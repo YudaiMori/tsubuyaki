@@ -39,6 +39,10 @@ class UserController extends Controller
             $user->name = $request->input('name');
         }
 
+        if ($request->input('introduction')) {
+            $user->introduction = $request->input('introduction');
+        }
+
         $user->update();
 
         return (new UserResource($user))

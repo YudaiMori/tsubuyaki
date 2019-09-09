@@ -7,9 +7,14 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group" v-if="user">
+                <div class="modal-body" v-if="user">
+                    <div class="form-group">
+                        <p>名前</p>
                         <input type="text" class="form-control" v-model="form.name">
+                    </div>
+                    <div class="form-group">
+                        <p>自己紹介</p>
+                        <input type="text" class="form-control" v-model="form.introduction">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -27,7 +32,8 @@
             return {
                 user: null,
                 form: {
-                    name: null
+                    name: null,
+                    introduction: null
                 }
             }
         },
@@ -35,6 +41,7 @@
             open: function (user) {
                 this.user = user;
                 this.form.name = user.attributes.name;
+                this.form.introduction = user.attributes.introduction;
                 $('#updateProfileModal').modal('show');
             },
             close: function () {
@@ -43,6 +50,7 @@
             save: function () {
                 axios.patch('/api/v1/users/profile', {
                     name: this.form.name,
+                    introduction: this.form.introduction,
                 })
                     .then(response => {
                         this.close();

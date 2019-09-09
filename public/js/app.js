@@ -13341,13 +13341,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UpdateProfileModal",
   data: function data() {
     return {
       user: null,
       form: {
-        name: null
+        name: null,
+        introduction: null
       }
     };
   },
@@ -13355,6 +13361,7 @@ __webpack_require__.r(__webpack_exports__);
     open: function open(user) {
       this.user = user;
       this.form.name = user.attributes.name;
+      this.form.introduction = user.attributes.introduction;
       $('#updateProfileModal').modal('show');
     },
     close: function close() {
@@ -13364,7 +13371,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.patch('/api/v1/users/profile', {
-        name: this.form.name
+        name: this.form.name,
+        introduction: this.form.introduction
       }).then(function (response) {
         _this.close();
 
@@ -53736,9 +53744,11 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "modal-body" }, [
-            _vm.user
-              ? _c("div", { staticClass: "form-group" }, [
+          _vm.user
+            ? _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("p", [_vm._v("名前")]),
+                  _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
@@ -53760,9 +53770,35 @@ var render = function() {
                       }
                     }
                   })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("p", [_vm._v("自己紹介")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.introduction,
+                        expression: "form.introduction"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.form.introduction },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "introduction", $event.target.value)
+                      }
+                    }
+                  })
                 ])
-              : _vm._e()
-          ]),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "modal-footer" }, [
             _c(
