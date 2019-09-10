@@ -2,7 +2,11 @@
     <div class="card" >
         <div class="card-body">
             <div class="d-flex justify-content-between">
-                <h5 class="card-title" @click="$emit('post-card-has-clicked', post)">{{ post.relationships.user.attributes.name }}</h5>
+                <div class="d-flex">
+                    <img v-if="post.relationships.user.attributes.image_url"
+                         :src="post.relationships.user.attributes.image_url" class="img-fluid icon">
+                    <h5 class="card-title" @click="$emit('post-card-has-clicked', post)">{{ post.relationships.user.attributes.name }}</h5>
+                </div>
                 <div class="btn-group">
                     <button class="btn btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <icon icon="angle-down"></icon>

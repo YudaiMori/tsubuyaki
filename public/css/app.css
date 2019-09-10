@@ -10644,6 +10644,24 @@ a.text-dark:focus {
   }
 }
 
+.card .card-body .icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+}
+
+.card .card-body .card-title {
+  margin: 0.75rem;
+}
+
+.card .card-body .profile-button {
+  margin-bottom: 10px;
+}
+
+.card .card-body .card-text {
+  margin-top: 0.75rem;
+}
+
 .card .card-body small {
   align-self: center;
 }

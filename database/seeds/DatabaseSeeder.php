@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $user = factory(\App\User::class)->create([
             'email' => 'ymori@fourmix.co.jp',
             'introduction' => '初めまして',
+            'image_path' => 'images/default.png',
         ]);
 
         factory(\App\Models\Post::class, 20)

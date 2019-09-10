@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->uuid('id');
             $table->uuid('user_id');
             $table->text('content');
-            $table->text('image_path')->nullable();
+            $table->string('image_path')->nullable();
             $table->timestamps();
 
             $table->primary('id');

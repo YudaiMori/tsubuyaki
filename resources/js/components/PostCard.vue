@@ -1,7 +1,11 @@
 <template>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title" @click="$emit('post-card-has-clicked', post)">{{ post.relationships.user.attributes.name }}</h5>
+            <div class="d-flex">
+                <img v-if="post.relationships.user.attributes.image_url"
+                     :src="post.relationships.user.attributes.image_url" class="img-fluid icon">
+                <h5 class="card-title" @click="$emit('post-card-has-clicked', post)">{{ post.relationships.user.attributes.name }}</h5>
+            </div>
             <p class="card-text" @click="$emit('post-card-has-clicked', post)">{{ post.attributes.content }}</p>
             <img @click="$emit('post-card-has-clicked', post)"
                  v-if="post.attributes.image_url"

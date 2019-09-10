@@ -5,6 +5,7 @@ namespace App;
 use App\Models\Comment;
 use App\Models\ModelConfig;
 use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -36,7 +37,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'id'
+        'password',
+        'remember_token',
+        'id',
+        'image_path',
     ];
 
     /**
@@ -48,8 +52,30 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'image_url'
+    ];
+
     public function posts()
     {
         return $this->hasMany(Post::class, 'user_id', 'id');
+    }
+
+    /**
+     * 画像URL
+     * @return |null
+     */
+    public function getImageUrlAttribute()
+    {
+        if (Storage::disk('public')->exists($this->image_path)) {
+            return $this->attributes['image_url'] = Storage::disk('public')->url($this->image_path);
+        }
+
+        return null;
     }
 }

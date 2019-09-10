@@ -12994,6 +12994,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "MyPostCard",
   props: ['post']
@@ -13078,6 +13082,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -13234,6 +13242,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -53196,18 +53208,27 @@ var render = function() {
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-body" }, [
       _c("div", { staticClass: "d-flex justify-content-between" }, [
-        _c(
-          "h5",
-          {
-            staticClass: "card-title",
-            on: {
-              click: function($event) {
-                return _vm.$emit("post-card-has-clicked", _vm.post)
+        _c("div", { staticClass: "d-flex" }, [
+          _vm.post.relationships.user.attributes.image_url
+            ? _c("img", {
+                staticClass: "img-fluid icon",
+                attrs: { src: _vm.post.relationships.user.attributes.image_url }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "h5",
+            {
+              staticClass: "card-title",
+              on: {
+                click: function($event) {
+                  return _vm.$emit("post-card-has-clicked", _vm.post)
+                }
               }
-            }
-          },
-          [_vm._v(_vm._s(_vm.post.relationships.user.attributes.name))]
-        ),
+            },
+            [_vm._v(_vm._s(_vm.post.relationships.user.attributes.name))]
+          )
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "btn-group" }, [
           _c(
@@ -53380,18 +53401,27 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-body" }, [
-      _c(
-        "h5",
-        {
-          staticClass: "card-title",
-          on: {
-            click: function($event) {
-              return _vm.$emit("post-card-has-clicked", _vm.post)
+      _c("div", { staticClass: "d-flex" }, [
+        _vm.post.relationships.user.attributes.image_url
+          ? _c("img", {
+              staticClass: "img-fluid icon",
+              attrs: { src: _vm.post.relationships.user.attributes.image_url }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "h5",
+          {
+            staticClass: "card-title",
+            on: {
+              click: function($event) {
+                return _vm.$emit("post-card-has-clicked", _vm.post)
+              }
             }
-          }
-        },
-        [_vm._v(_vm._s(_vm.post.relationships.user.attributes.name))]
-      ),
+          },
+          [_vm._v(_vm._s(_vm.post.relationships.user.attributes.name))]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "p",
@@ -53620,14 +53650,23 @@ var render = function() {
     ? _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "d-flex justify-content-between" }, [
-            _c("h5", { staticClass: "card-title" }, [
-              _vm._v(_vm._s(_vm.user.attributes.name))
+            _c("div", { staticClass: "d-flex" }, [
+              _vm.user.attributes.image_url
+                ? _c("img", {
+                    staticClass: "img-fluid icon",
+                    attrs: { src: _vm.user.attributes.image_url }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _c("h5", { staticClass: "card-title" }, [
+                _vm._v(_vm._s(_vm.user.attributes.name))
+              ])
             ]),
             _vm._v(" "),
             _c(
               "button",
               {
-                staticClass: "btn btn-primary",
+                staticClass: "btn btn-primary profile-button",
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
