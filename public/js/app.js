@@ -13331,6 +13331,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_croppa__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-croppa */ "./node_modules/vue-croppa/dist/vue-croppa.js");
+/* harmony import */ var vue_croppa__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_croppa__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -13358,14 +13368,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UpdateProfileModal",
+  components: {
+    croppa: vue_croppa__WEBPACK_IMPORTED_MODULE_1___default.a.component
+  },
   data: function data() {
     return {
       user: null,
       form: {
         name: null,
-        introduction: null
+        introduction: null,
+        imagePicker: {}
       }
     };
   },
@@ -13379,20 +13399,64 @@ __webpack_require__.r(__webpack_exports__);
     close: function close() {
       $('#updateProfileModal').modal('hide');
     },
-    save: function save() {
-      var _this = this;
+    save: function () {
+      var _save = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var _this = this;
 
-      axios.patch('/api/v1/users/profile', {
-        name: this.form.name,
-        introduction: this.form.introduction
-      }).then(function (response) {
-        _this.close();
+        var formData, image, config;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                formData = new FormData();
+                formData.append('_method', 'patch');
+                _context.next = 4;
+                return this.form.imagePicker.promisedBlob('image/jpeg', 0.8);
 
-        location.reload();
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    }
+              case 4:
+                image = _context.sent;
+
+                if (image) {
+                  formData.append('image', image);
+                }
+
+                if (this.form.name) {
+                  formData.append('name', this.form.name);
+                }
+
+                if (this.form.introduction) {
+                  formData.append('introduction', this.form.introduction);
+                }
+
+                config = {
+                  headers: {
+                    'content-type': 'multipart/form-data'
+                  }
+                };
+                axios.post('/api/v1/users/profile', formData, config).then(function (response) {
+                  _this.close();
+
+                  location.reload();
+                })["catch"](function (error) {
+                  console.log(error);
+                });
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function save() {
+        return _save.apply(this, arguments);
+      }
+
+      return save;
+    }()
   }
 });
 
@@ -53785,6 +53849,26 @@ var render = function() {
           _vm._v(" "),
           _vm.user
             ? _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("p", [_vm._v("プロフィール画像")]),
+                    _vm._v(" "),
+                    _c("croppa", {
+                      attrs: { "initial-image": _vm.user.attributes.image_url },
+                      model: {
+                        value: _vm.form.imagePicker,
+                        callback: function($$v) {
+                          _vm.$set(_vm.form, "imagePicker", $$v)
+                        },
+                        expression: "form.imagePicker"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
                   _c("p", [_vm._v("名前")]),
                   _vm._v(" "),

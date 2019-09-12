@@ -33,6 +33,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'string|min:1|max:50',
             'introduction' => 'nullable|string|max:160',
+            'image' => 'nullable|image',
         ]);
 
         if ($request->input('name')) {
@@ -41,6 +42,12 @@ class UserController extends Controller
 
         if ($request->input('introduction')) {
             $user->introduction = $request->input('introduction');
+        }
+
+        if ($request->hasFile('image'))
+        {
+            $path = $request->image->store('images', 'public');
+            $user->image_path = $path;
         }
 
         $user->update();
