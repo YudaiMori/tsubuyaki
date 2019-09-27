@@ -1,6 +1,6 @@
 <template>
     <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog" role="document" v-click-outside="close">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" @click="close" aria-label="Close">
@@ -29,6 +29,7 @@
 
 <script>
     import Croppa from 'vue-croppa';
+    import ClickOutside from 'vue-click-outside';
     export default {
         name: "CreatePostModal",
         components: {croppa: Croppa.component},
@@ -89,6 +90,9 @@
                         console.log(error);
                     });
             }
+        },
+        directives: {
+            ClickOutside
         }
     }
 </script>

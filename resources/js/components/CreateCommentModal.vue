@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="createCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="createCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" v-click-outside="close">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+    import ClickOutside from 'vue-click-outside';
     export default {
         name: "CreateCommentModal",
         data: function() {
@@ -57,6 +58,9 @@
                         console.log(error);
                     });
             }
+        },
+        directives: {
+            ClickOutside
         }
     }
 </script>
